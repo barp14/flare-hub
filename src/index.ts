@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from "express"
 import dotenv from "dotenv"
+import cors from "cors"
 
-import icecreamRoutes from "./routes/IcecreamRoutes"
+import playerRoutes from "./routes/PlayerRoutes"
 
 import swaggerUi from "swagger-ui-express"
 import { connect } from "./service/database"
@@ -27,7 +28,14 @@ app.use(
   })
 )
 
-app.use("/api/icecream", icecreamRoutes)
+app.use("/api/player", playerRoutes)
+
+// aceitar requisições desse endereço
+const corsOptions = { 
+  origin : ['http://localhost:3000'], 
+} 
+ 
+app.use(cors(corsOptions)) 
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server")

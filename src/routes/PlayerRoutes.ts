@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express"
-import IcecreamController from "../controllers/IcecreamController"
+import PlayerController from "../controllers/PlayerController"
 
 const router = express.Router()
-const controller = new IcecreamController()
+const controller = new PlayerController()
 
 router.post("/create", async (req: Request, res: Response) => {
   const response = await controller.create(req.body)
@@ -24,25 +24,6 @@ router.patch("/update", async (req: Request, res: Response) => {
 
 router.delete("/delete/:id", async (req: Request, res: Response) => {
   const response = await controller.delete(req.params.id)
-
-  return res.status(response.error ? 400 : 200).send(response)
-})
-
-router.get("/getToppings", async (req: Request, res: Response) => {
-  const response = await controller.allToppings()
-
-  return res.status(response.error ? 400 : 200).send(response)
-})
-
-
-router.get("/query", async (req: Request, res: Response) => {
-  const response = await controller.query()
-
-  return res.status(response.error ? 400 : 200).send(response)
-})
-
-router.get("/fields", async (req: Request, res: Response) => {
-  const response = await controller.fields()
 
   return res.status(response.error ? 400 : 200).send(response)
 })

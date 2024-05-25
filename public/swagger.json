@@ -27,7 +27,7 @@
 		}
 	},
 	"paths": {
-		"/api/icecream/create": {
+		"/api/Player/create": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
@@ -64,7 +64,7 @@
 				}
 			}
 		},
-		"/api/icecream/getAll": {
+		"/api/Player/getAll": {
 			"get": {
 				"operationId": "All",
 				"responses": {
@@ -83,7 +83,7 @@
 				"parameters": []
 			}
 		},
-		"/api/icecream/update": {
+		"/api/Player/update": {
 			"patch": {
 				"operationId": "Update",
 				"responses": {
@@ -124,7 +124,7 @@
 				}
 			}
 		},
-		"/api/icecream/delete/{id}": {
+		"/api/Player/delete/{id}": {
 			"delete": {
 				"operationId": "Delete",
 				"responses": {
@@ -150,63 +150,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/api/icecream/getToppings": {
-			"get": {
-				"operationId": "AllToppings",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/JsonObject"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/api/icecream/fields": {
-			"get": {
-				"operationId": "Fields",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/JsonObject"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/api/icecream/query": {
-			"get": {
-				"operationId": "Query",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/JsonObject"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
 			}
 		}
 	},
