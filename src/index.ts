@@ -3,6 +3,10 @@ import dotenv from "dotenv"
 import cors from "cors"
 
 import playerRoutes from "./routes/PlayerRoutes"
+import headsetRoutes from "./routes/HeadsetRoutes"
+import keyboardRoutes from "./routes/KeyboardRoutes"
+import mouseRoutes from "./routes/MouseRoutes"
+import mousepadRoutes from "./routes/MousepadRoutes"
 
 import swaggerUi from "swagger-ui-express"
 import { connect } from "./service/database"
@@ -29,6 +33,10 @@ app.use(
 )
 
 app.use("/api/player", playerRoutes)
+app.use("/api/headset", headsetRoutes)
+app.use("/api/keyboard", keyboardRoutes)
+app.use("/api/mouse", mouseRoutes)
+app.use("/api/mousepad", mousepadRoutes)
 
 // aceitar requisições desse endereço
 const corsOptions = { 

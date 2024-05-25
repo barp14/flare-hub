@@ -21,17 +21,17 @@ const playerSchema =new mongoose.Schema({
         required: false,
         type: String,
     },
-    headset: {
-        type: mongoose.Schema.Types.ObjectId, ref: "Equipment"
+    headsetId: {
+        type: mongoose.Schema.Types.ObjectId, ref: "Headset"
     },
-    keyboard: {
-        type: mongoose.Schema.Types.ObjectId, ref: "Equipment"
+    keyboardId: {
+        type: mongoose.Schema.Types.ObjectId, ref: "Keyboard"
     },
-    mouse: {
-        type: mongoose.Schema.Types.ObjectId, ref: "Equipment"
+    mouseId: {
+        type: mongoose.Schema.Types.ObjectId, ref: "Mouse"
     },
-    mousepad: {
-        type: mongoose.Schema.Types.ObjectId, ref: "Equipment"
+    mousepadId: {
+        type: mongoose.Schema.Types.ObjectId, ref: "Mousepad"
     },
     gameId: {
         type: mongoose.Schema.Types.ObjectId, ref: "Game"
