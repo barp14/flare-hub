@@ -42,6 +42,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -95,6 +98,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": []
 			}
@@ -114,6 +120,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -171,6 +180,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -199,6 +211,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -245,6 +260,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -291,6 +309,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -337,6 +358,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Player"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -383,6 +407,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Headset"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -424,6 +451,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Headset"
+				],
 				"security": [],
 				"parameters": []
 			}
@@ -443,6 +473,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Headset"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -471,6 +504,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Keyboard"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -512,6 +548,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Keyboard"
+				],
 				"security": [],
 				"parameters": []
 			}
@@ -531,6 +570,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Keyboard"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -559,6 +601,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Mouse"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -600,6 +645,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Mouse"
+				],
 				"security": [],
 				"parameters": []
 			}
@@ -619,6 +667,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Mouse"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -647,6 +698,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Mousepad"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -688,6 +742,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Mousepad"
+				],
 				"security": [],
 				"parameters": []
 			}
@@ -707,6 +764,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Mousepad"
+				],
 				"security": [],
 				"parameters": [
 					{

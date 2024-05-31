@@ -1,8 +1,9 @@
-import { Body, Get, Delete, Post, Route } from "tsoa"
+import { Body, Get, Delete, Post, Route, Tags } from "tsoa"
 import { HeadsetModel } from "../models/Headset"
 import { JsonObject } from "swagger-ui-express"
 
 @Route("api/Headset")
+@Tags("Headset")
 export default class HeadsetController {
   @Post("/create")
   public async create(@Body() body: { name: string; brand:string }): Promise<string> {

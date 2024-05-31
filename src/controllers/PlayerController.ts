@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Put, Body, Get, Patch, Delete, Post, Route, Path } from "tsoa";
+import { Put, Body, Get, Patch, Delete, Post, Route, Path, Tags } from "tsoa";
 import { PlayerModel } from "../models/Player"
 import { HeadsetModel } from "../models/Headset"
 import { KeyboardModel } from "../models/Keyboard"
@@ -8,6 +8,7 @@ import { MousepadModel } from "../models/Mousepad"
 import { JsonObject } from "swagger-ui-express"
 
 @Route("api/Player")
+@Tags("Player")
 export default class PlayerController {
   @Post("/create")
   public async create(@Body() body: { name: string; description: string; nacionality: string; age: string; role: string;  }): Promise<string> {

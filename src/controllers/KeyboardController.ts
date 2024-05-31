@@ -1,8 +1,9 @@
-import { Body, Get, Delete, Post, Route } from "tsoa"
+import { Body, Get, Delete, Post, Route, Tags } from "tsoa"
 import { KeyboardModel } from "../models/Keyboard"
 import { JsonObject } from "swagger-ui-express"
 
 @Route("api/Keyboard")
+@Tags("Keyboard")
 export default class KeyboardController {
   @Post("/create")
   public async create(@Body() body: { name: string; brand:string }): Promise<string> {

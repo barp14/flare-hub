@@ -1,8 +1,9 @@
-import { Body, Get, Delete, Post, Route } from "tsoa"
+import { Body, Get, Delete, Post, Route, Tags } from "tsoa"
 import { MouseModel } from "../models/Mouse"
 import { JsonObject } from "swagger-ui-express"
 
 @Route("api/Mouse")
+@Tags("Mouse")
 export default class MouseController {
   @Post("/create")
   public async create(@Body() body: { name: string; brand:string }): Promise<string> {
