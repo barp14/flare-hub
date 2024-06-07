@@ -12,3 +12,4 @@ const headsetSchema = new mongoose.Schema({
 });
 
 export const HeadsetModel = mongoose.model("Headset", headsetSchema);
+

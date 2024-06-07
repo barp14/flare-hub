@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express"
-import PlayerController from "../controllers/PlayerController"
+import PlayerController from "../controllers/PlayerController";
 
-const router = express.Router()
-const controller = new PlayerController()
+const router = express.Router();
+const controller = new PlayerController();
 
 router.post("/create", async (req: Request, res: Response) => {
   const response = await controller.create(req.body)
@@ -28,36 +28,29 @@ router.delete("/delete/:id", async (req: Request, res: Response) => {
   return res.status(response.error ? 400 : 200).send(response)
 })
 
-router.put("/addHeadset/:playerId", async (req: Request, res: Response) => {
-  const { playerId } = req.params;
-  const { headsetId } = req.body;
-  const response = await controller.addHeadsetToPlayer(playerId, { headsetId });
-
-  return res.status(response.error ? 400 : 200).send(response);
+router.put("/addEquipment/:playerId", async (req, res) => {
+  const response = await controller.addEquipment(req.params.playerId, req.body);
+  res.send(response);
 });
 
-router.put("/addKeyboard/:playerId", async (req: Request, res: Response) => {
-  const { playerId } = req.params;
-  const { keyboardId } = req.body;
-  const response = await controller.addKeyboardToPlayer(playerId, { keyboardId });
+// router.put("/addKeyboard/:playerId", async (req, res) => {
+//   const response = await controller.addKeyboard(req.params.playerId, req.body);
+//   res.send(response);
+// });
 
-  return res.status(response.error ? 400 : 200).send(response);
+// router.put("/addMouse/:playerId", async (req, res) => {
+//   const response = await controller.addMouse(req.params.playerId, req.body);
+//   res.send(response);
+// });
+
+// router.put("/addMousepad/:playerId", async (req, res) => {
+//   const response = await controller.addMousepad(req.params.playerId, req.body);
+//   res.send(response);
+// });
+
+router.get("/getAll", async (req, res) => {
+  const response = await controller.all();
+  res.json(response);
 });
 
-router.put("/addMouse/:playerId", async (req: Request, res: Response) => {
-  const { playerId } = req.params;
-  const { mouseId } = req.body;
-  const response = await controller.addMouseToPlayer(playerId, { mouseId });
-
-  return res.status(response.error ? 400 : 200).send(response);
-});
-
-router.put("/addMousepad/:playerId", async (req: Request, res: Response) => {
-  const { playerId } = req.params;
-  const { mousepadId } = req.body;
-  const response = await controller.addMousepadToPlayer(playerId, { mousepadId });
-
-  return res.status(response.error ? 400 : 200).send(response);
-});
-
-export default router
+export default router;

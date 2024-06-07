@@ -1,11 +1,7 @@
-import mongoose from "mongoose";
-import { Put, Body, Get, Patch, Delete, Post, Route, Path, Tags } from "tsoa";
-import { PlayerModel } from "../models/Player"
-import { HeadsetModel } from "../models/Headset"
-import { KeyboardModel } from "../models/Keyboard"
-import { MouseModel } from "../models/Mouse"
-import { MousepadModel } from "../models/Mousepad"
-import { JsonObject } from "swagger-ui-express"
+import { Put, Body, Get, Patch, Delete, Post, Route, Tags } from "tsoa";
+import { PlayerModel } from "../models/Player";
+import { EquipmentModel } from "../models/Equipment";
+import { JsonObject } from "swagger-ui-express";
 
 @Route("api/Player")
 @Tags("Player")
@@ -68,108 +64,62 @@ export default class PlayerController {
     }
   }
 
-  @Put("/addHeadset/:playerId")
-  public async addHeadsetToPlayer(
-    @Path("playerId") playerId: string,
-    @Body() body: { headsetId: string }
-  ): Promise<JsonObject> {
+  @Put("/addEquipment/{playerId}")
+  public async addEquipment(playerId: string, @Body() body: { _id: string }): Promise<string> {
     try {
       const player = await PlayerModel.findById(playerId);
       if (!player) {
-        return { error: "Player not found" };
+        return "Player not found";
+      }
+  
+      // Verifica se 'player.equipment' não é nulo ou indefinido antes de acessar suas propriedades
+      if (!player.equipment) {
+        player.equipment = {};
       }
 
-      const headset = await HeadsetModel.findById(body.headsetId);
-      if (!headset) {
-        return { error: "Headset not found" };
+      // Busca o equipamento pelo ID fornecido
+      const equipment = await EquipmentModel.findById(body._id);
+      if (!equipment) {
+        return "Equipment not found";
       }
 
-      player.headsetId = new mongoose.Types.ObjectId(body.headsetId);
+      // Verifica o tipo de equipamento com base nas propriedades
+      let equipmentType: string;
+      if (equipment.headsets && equipment.headsets.length > 0) {
+        equipmentType = "headset";
+      } else if (equipment.keyboards && equipment.keyboards.length > 0) {
+        equipmentType = "keyboard";
+      } else if (equipment.mouses && equipment.mouses.length > 0) {
+        equipmentType = "mouse";
+      } else if (equipment.mousepads && equipment.mousepads.length > 0) {
+        equipmentType = "mousepad";
+      } else {
+        return "Invalid equipment type";
+      }
+
+      // Associa o equipamento ao jogador
+      switch (equipmentType) {
+        case "headset":
+          player.equipment.headsetId = equipment._id;
+          break;
+        case "keyboard":
+          player.equipment.keyboardId = equipment._id;
+          break;
+        case "mouse":
+          player.equipment.mouseId = equipment._id;
+          break;
+        case "mousepad":
+          player.equipment.mousepadId = equipment._id;
+          break;
+        default:
+          return "Invalid equipment type";
+      }
+  
+      // Salva as alterações no documento do jogador
       await player.save();
-
-      return { message: "Headset added to player successfully", player };
-    }
-    catch (error: any) {
-      return { error: error.message };
+      return "Equipment added to player successfully";
+    } catch (error: any) {
+      return error.message;
     }
   }
-
-  @Put("/addKeyboard/:playerId")
-  public async addKeyboardToPlayer(
-    @Path("playerId") playerId: string,
-    @Body() body: { keyboardId: string }
-  ): Promise<JsonObject> {
-    try {
-      const player = await PlayerModel.findById(playerId);
-      if (!player) {
-        return { error: "Player not found" };
-      }
-
-      const keyboard = await KeyboardModel.findById(body.keyboardId);
-      if (!keyboard) {
-        return { error: "Keyboard not found" };
-      }
-
-      player.keyboardId = new mongoose.Types.ObjectId(body.keyboardId);
-      await player.save();
-
-      return { message: "Keyboard added to player successfully", player };
-    }
-    catch (error: any) {
-      return { error: error.message };
-    }
-  }
-
-  @Put("/addMouse/:playerId")
-  public async addMouseToPlayer(
-    @Path("playerId") playerId: string,
-    @Body() body: { mouseId: string }
-  ): Promise<JsonObject> {
-    try {
-      const player = await PlayerModel.findById(playerId);
-      if (!player) {
-        return { error: "Player not found" };
-      }
-
-      const mouse = await MouseModel.findById(body.mouseId);
-      if (!mouse) {
-        return { error: "Mouse not found" };
-      }
-
-      player.mouseId = new mongoose.Types.ObjectId(body.mouseId);
-      await player.save();
-
-      return { message: "Mouse added to player successfully", player };
-    }
-    catch (error: any) {
-      return { error: error.message };
-    }
-  }
-
-  @Put("/addMousepad/:playerId")
-  public async addMousepadToPlayer(
-    @Path("playerId") playerId: string,
-    @Body() body: { mousepadId: string }
-  ): Promise<JsonObject> {
-    try {
-      const player = await PlayerModel.findById(playerId);
-      if (!player) {
-        return { error: "Player not found" };
-      }
-
-      const mousepad = await MousepadModel.findById(body.mousepadId);
-      if (!mousepad) {
-        return { error: "Mousepad not found" };
-      }
-
-      player.mousepadId = new mongoose.Types.ObjectId(body.mousepadId);
-      await player.save();
-
-      return { message: "Mousepad added to player successfully", player };
-    }
-    catch (error: any) {
-      return { error: error.message };
-    }
-  }
-
 }
