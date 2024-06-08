@@ -64,6 +64,7 @@ export default class PlayerController {
     }
   }
 
+
   @Put("/addEquipment/{playerId}")
   public async addEquipment(playerId: string, @Body() body: { _id: string }): Promise<string> {
     try {
@@ -71,31 +72,50 @@ export default class PlayerController {
       if (!player) {
         return "Player not found";
       }
-  
-      // Verifica se 'player.equipment' não é nulo ou indefinido antes de acessar suas propriedades
+
+      // Verifica se a propriedade 'equipment' está definida
       if (!player.equipment) {
-        player.equipment = {};
+        player.equipment = {
+          headsetId: null,
+          keyboardId: null,
+          mouseId: null,
+          mousepadId: null
+        };
       }
 
       // Busca o equipamento pelo ID fornecido
-      const equipment = await EquipmentModel.findById(body._id);
-      if (!equipment) {
+      const equipmentDoc = await EquipmentModel.findOne({
+        $or: [
+          { "headsets._id": body._id },
+          { "keyboards._id": body._id },
+          { "mouses._id": body._id },
+          { "mousepads._id": body._id }
+        ]
+      });
+
+      if (!equipmentDoc) {
         return "Equipment not found";
       }
 
-      // Verifica o tipo de equipamento com base nas propriedades
-      let equipmentType: string;
-      if (equipment.headsets && equipment.headsets.length > 0) {
-        equipmentType = "headset";
-      } else if (equipment.keyboards && equipment.keyboards.length > 0) {
-        equipmentType = "keyboard";
-      } else if (equipment.mouses && equipment.mouses.length > 0) {
-        equipmentType = "mouse";
-      } else if (equipment.mousepads && equipment.mousepads.length > 0) {
-        equipmentType = "mousepad";
-      } else {
-        return "Invalid equipment type";
+      // Busca o tipo de equipamento específico
+      let equipment: any;
+      let equipmentType: string | undefined;
+
+      const types = ['headsets', 'keyboards', 'mouses', 'mousepads'] as const;
+
+      for (const type of types) {
+        equipment = (equipmentDoc as any)[type].id(body._id);
+        if (equipment) {
+          equipmentType = type.slice(0, -1); // Remove o 's' do final para obter o tipo correto
+          break;
+        }
       }
+
+      if (!equipment || !equipmentType) {
+        return "Equipment not found";
+      }
+
+      console.log(`Found equipment of type: ${equipmentType}`, equipment);
 
       // Associa o equipamento ao jogador
       switch (equipmentType) {
@@ -114,11 +134,12 @@ export default class PlayerController {
         default:
           return "Invalid equipment type";
       }
-  
+
       // Salva as alterações no documento do jogador
       await player.save();
       return "Equipment added to player successfully";
     } catch (error: any) {
+      console.error("Error adding equipment to player:", error);
       return error.message;
     }
   }
