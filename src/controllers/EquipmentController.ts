@@ -110,15 +110,15 @@ export default class EquipmentController {
     }
   }
 
-  @Delete("/delete/:id")
-  public async delete(id: string): Promise<JsonObject> {
-    try {
-      const data = await EquipmentModel.findByIdAndDelete(id)
-      return { data: data };
-    } catch (error: any) {
-      return {
-        error: error.message
-      };
+    @Delete("/delete/:id")
+    public async delete(id: string): Promise<JsonObject> {
+      try {
+        const data = await EquipmentModel.findByIdAndDelete(id)
+        return { data: data };
+      } catch (error: any) {
+        return {
+          error: error.message
+        };
+      }
     }
-  }
 }

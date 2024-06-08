@@ -64,7 +64,6 @@ export default class PlayerController {
     }
   }
 
-
   @Put("/addEquipment/{playerId}")
   public async addEquipment(playerId: string, @Body() body: { _id: string }): Promise<string> {
     try {
@@ -92,44 +91,41 @@ export default class PlayerController {
           { "mousepads._id": body._id }
         ]
       });
-
       if (!equipmentDoc) {
         return "Equipment not found";
       }
-
-      // Busca o tipo de equipamento específico
-      let equipment: any;
-      let equipmentType: string | undefined;
-
-      const types = ['headsets', 'keyboards', 'mouses', 'mousepads'] as const;
-
-      for (const type of types) {
-        equipment = (equipmentDoc as any)[type].id(body._id);
-        if (equipment) {
-          equipmentType = type.slice(0, -1); // Remove o 's' do final para obter o tipo correto
-          break;
-        }
+      
+      // Procura dentro de cada array se algum "_id" corresponde ao "body._id", em caso positivo define o equipmentType de acordo com o "_id" correspondente
+      let equipmentType = null;
+      if (equipmentDoc.headsets.some(headset => headset._id?.toString() === body._id)) {
+        equipmentType = "headset";
+      } else if (equipmentDoc.keyboards.some(keyboard => keyboard?._id?.toString() === body._id)) {
+        equipmentType = "keyboard";
+      } else if (equipmentDoc.mouses.some(mouse => mouse._id?.toString() === body._id)) {
+        equipmentType = "mouse";
+      } else if (equipmentDoc.mousepads.some(mousepad => mousepad._id?.toString() === body._id)) {
+        equipmentType = "mousepad";
+      } else {
+        return "Invalid equipment type";
       }
-
-      if (!equipment || !equipmentType) {
-        return "Equipment not found";
-      }
-
-      console.log(`Found equipment of type: ${equipmentType}`, equipment);
-
+      
       // Associa o equipamento ao jogador
+      const mongoose = require('mongoose');
+      const { ObjectId } = mongoose.Types;
+      const equipmentId = new ObjectId(body._id);
+
       switch (equipmentType) {
         case "headset":
-          player.equipment.headsetId = equipment._id;
+          player.equipment.headsetId = equipmentId;
           break;
         case "keyboard":
-          player.equipment.keyboardId = equipment._id;
+          player.equipment.keyboardId = equipmentId;
           break;
         case "mouse":
-          player.equipment.mouseId = equipment._id;
+          player.equipment.mouseId = equipmentId;
           break;
         case "mousepad":
-          player.equipment.mousepadId = equipment._id;
+          player.equipment.mousepadId = equipmentId;
           break;
         default:
           return "Invalid equipment type";
