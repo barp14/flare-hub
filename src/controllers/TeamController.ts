@@ -1,6 +1,7 @@
 import { Put, Body, Get, Patch, Delete, Post, Route, Tags } from "tsoa";
 import { TeamModel } from "../models/Team";
 import { JsonObject } from "swagger-ui-express";
+import { PlayerModel } from "../models/Player";
 
 @Route("api/Team")
 @Tags("Team")
@@ -60,6 +61,37 @@ export default class TeamController {
       return {
         error: error.message
       };
+    }
+  }
+
+  @Put("/addPlayer")
+  public async addPlayer(@Body() body: { teamId: string, playerId: string }): Promise<string> {
+    try {
+      const team = await TeamModel.findById(body.teamId);
+      if (!team) {
+        return "Team not found";
+      }
+
+      const player = await PlayerModel.findById(body.playerId);
+      if (!player) {
+        return "Player not found";
+      }
+
+      if (team.players.some(p => p.playerId?.equals(player._id))) {
+        return "Player already in team";
+      }
+
+      if (team.players.length >= 5) {
+        return "Team is already full";
+      }
+
+      team.players.push({ playerId: player._id });
+      await team.save();
+
+      return "Player added to team successfully";
+    } catch (error: any) {
+      console.error("Error adding player to team:", error);
+      return error.message;
     }
   }
 

@@ -720,6 +720,50 @@
 				}
 			}
 		},
+		"/api/Team/addPlayer": {
+			"put": {
+				"operationId": "AddPlayer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Team"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"playerId": {
+										"type": "string"
+									},
+									"teamId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"playerId",
+									"teamId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/Team/delete/{id}": {
 			"delete": {
 				"operationId": "Delete",

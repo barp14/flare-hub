@@ -28,6 +28,15 @@ router.patch("/update", async (req: Request, res: Response) => {
   return res.status(response.error ? 400 : 200).send(response)
 })
 
+router.put("/addPlayer", async (req: Request, res: Response) => {
+  try {
+    const response = await controller.addPlayer(req.body);
+    res.send(response);
+  } catch (error) {
+    res.status(500).send({ error: error instanceof Error ? error.message : "An unexpected error occurred" });
+  }
+});
+
 router.delete("/delete/:id", async (req: Request, res: Response) => {
   const response = await controller.delete(req.params.id)
 
