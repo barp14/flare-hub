@@ -37,13 +37,26 @@ export default class PlayerController {
     }
   }
 
+  @Get("/get/:id")
+  public async get(id: string): Promise<JsonObject> {
+    try {
+      const data = await PlayerModel.findById(id);
+      if (!data) {
+        throw new Error('Not Found'); 
+      }
+      return { data: data };
+    } catch (error) {
+      console.error(error);
+      return { error: 'Resource not found' }; 
+    }
+  }
+
   @Patch("/update")
   public async update(@Body() body: { id: string; name: string; description: string; nacionality: string; age: string; role: string; }): Promise<JsonObject> {
     try {
       const result = await PlayerModel.findByIdAndUpdate(
         body.id, { name: body.name, description: body.description, nacionality: body.nacionality, age: body.age, role: body.role }
       )
-
       return { result: result };
     } catch (error: any) {
       return {

@@ -16,6 +16,12 @@ router.get("/getAll", async (req: Request, res: Response) => {
   return res.status(response.error ? 400 : 200).send(response)
 })
 
+router.get("/get/:id", async (req: Request, res: Response) => {
+  const response = await controller.get(req.params.id)
+
+  return res.status(response.error ? 400 : 200).send(response)
+})
+
 router.patch("/update", async (req: Request, res: Response) => {
   const response = await controller.update(req.body)
 
@@ -31,26 +37,6 @@ router.delete("/delete/:id", async (req: Request, res: Response) => {
 router.put("/addEquipment/:playerId", async (req, res) => {
   const response = await controller.addEquipment(req.params.playerId, req.body);
   res.send(response);
-});
-
-// router.put("/addKeyboard/:playerId", async (req, res) => {
-//   const response = await controller.addKeyboard(req.params.playerId, req.body);
-//   res.send(response);
-// });
-
-// router.put("/addMouse/:playerId", async (req, res) => {
-//   const response = await controller.addMouse(req.params.playerId, req.body);
-//   res.send(response);
-// });
-
-// router.put("/addMousepad/:playerId", async (req, res) => {
-//   const response = await controller.addMousepad(req.params.playerId, req.body);
-//   res.send(response);
-// });
-
-router.get("/getAll", async (req, res) => {
-  const response = await controller.all();
-  res.json(response);
 });
 
 export default router;

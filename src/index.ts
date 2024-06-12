@@ -4,10 +4,8 @@ import cors from "cors"
 
 import playerRoutes from "./routes/PlayerRoutes"
 import equipmentRoutes from "./routes/EquipmentRoutes"
-// import headsetRoutes from "./routes/HeadsetRoutes"
-// import keyboardRoutes from "./routes/KeyboardRoutes"
-// import mouseRoutes from "./routes/MouseRoutes"
-// import mousepadRoutes from "./routes/MousepadRoutes"
+import gameRoutes from "./routes/GameRoutes"
+import teamRoutes from "./routes/TeamRoutes"
 
 import swaggerUi from "swagger-ui-express"
 import { connect } from "./service/database"
@@ -35,10 +33,8 @@ app.use(
 
 app.use("/api/player", playerRoutes)
 app.use("/api/equipment", equipmentRoutes)
-// app.use("/api/headset", headsetRoutes)
-// app.use("/api/keyboard", keyboardRoutes)
-// app.use("/api/mouse", mouseRoutes)
-// app.use("/api/mousepad", mousepadRoutes)
+app.use("/api/game", gameRoutes)
+app.use("/api/team", teamRoutes)
 
 // aceitar requisições desse endereço
 const corsOptions = { 
