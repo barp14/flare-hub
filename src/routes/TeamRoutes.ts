@@ -5,10 +5,16 @@ const router = express.Router();
 const controller = new TeamController();
 
 router.post("/create", async (req: Request, res: Response) => {
-  const response = await controller.create(req.body)
-
-  return res.status(response === "OK" ? 200 : 400).send(response)
-})
+  console.log("Request Body:", req.body);  // Debug log para verificar o corpo da solicitação
+  try {
+    const response = await controller.create(req.body);
+    console.log("Response:", response);  // Debug log para verificar a resposta
+    res.status(response === "OK" ? 201 : 400).send(response);
+  } catch (error) {
+    console.error("Error:", error);  // Debug log para verificar erros
+    res.status(500).send({ error: error instanceof Error ? error.message : "An unexpected error occurred" });
+  }
+});
 
 router.get("/getAll", async (req: Request, res: Response) => {
   const response = await controller.all()

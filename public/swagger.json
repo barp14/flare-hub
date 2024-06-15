@@ -593,6 +593,12 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"image2": {
+										"type": "string"
+									},
+									"image1": {
+										"type": "string"
+									},
 									"teamType": {
 										"type": "string"
 									},
@@ -604,6 +610,8 @@
 									}
 								},
 								"required": [
+									"image2",
+									"image1",
 									"teamType",
 									"description",
 									"name"
