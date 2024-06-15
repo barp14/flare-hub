@@ -22,6 +22,15 @@ router.get("/get/:id", async (req: Request, res: Response) => {
   return res.status(response.error ? 400 : 200).send(response)
 })
 
+router.get("/getTeamsByType", async (req: Request, res: Response) => {
+  try {
+    const response = await controller.getTeamsByType(req.query.teamType as string);
+    res.status(response.error ? 400 : 200).send(response);
+  } catch (error) {
+    res.status(500).send({ error: error instanceof Error ? error.message : "An unexpected error occurred" });
+  }
+});
+
 router.patch("/update", async (req: Request, res: Response) => {
   const response = await controller.update(req.body)
 

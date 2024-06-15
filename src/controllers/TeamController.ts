@@ -1,7 +1,8 @@
-import { Put, Body, Get, Patch, Delete, Post, Route, Tags } from "tsoa";
+import { Put, Body, Get, Patch, Delete, Post, Route, Tags, Query } from "tsoa";
 import { TeamModel } from "../models/Team";
 import { JsonObject } from "swagger-ui-express";
 import { PlayerModel } from "../models/Player";
+import { GameModel } from "../models/Game";
 
 @Route("api/Team")
 @Tags("Team")
@@ -47,6 +48,39 @@ export default class TeamController {
     } catch (error) {
       console.error(error);
       return { error: 'Resource not found' }; 
+    }
+  }
+
+  @Get("/getTeamsByType")
+  public async getTeamsByType(@Query() teamType: string): Promise<JsonObject> {
+    try {
+      const game = await GameModel.findOne().populate({
+        path: `${teamType}Teams`,
+        model: "Team"
+      });
+      if (!game) {
+        return { error: "Game not found" };
+      }
+
+      let teams;
+      switch (teamType) {
+        case "leagueOfLegends":
+          teams = game.leagueOfLegendsTeams;
+          break;
+        case "counterStrike2":
+          teams = game.counterStrike2Teams;
+          break;
+        case "valorant":
+          teams = game.valorantTeams;
+          break;
+        default:
+          return { error: "Invalid team type" };
+      }
+
+      return { teams };
+    } catch (error: any) {
+      console.error("Error fetching teams by type:", error);
+      return { error: error.message };
     }
   }
 
