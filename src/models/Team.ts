@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const playerSchema = new Schema({
   playerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' }
-}); ({ _id: false });
+}, { _id: false });  // Desabilita o campo _id nos subdocumentos
 
 const TeamSchema = new mongoose.Schema({
   name: {

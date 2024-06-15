@@ -53,6 +53,12 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"image2": {
+										"type": "string"
+									},
+									"image1": {
+										"type": "string"
+									},
 									"role": {
 										"type": "string"
 									},
@@ -65,16 +71,26 @@
 									"description": {
 										"type": "string"
 									},
-									"name": {
+									"nickName": {
+										"type": "string"
+									},
+									"lastName": {
+										"type": "string"
+									},
+									"firstName": {
 										"type": "string"
 									}
 								},
 								"required": [
+									"image2",
+									"image1",
 									"role",
 									"age",
 									"nacionality",
 									"description",
-									"name"
+									"nickName",
+									"lastName",
+									"firstName"
 								],
 								"type": "object"
 							}
@@ -162,6 +178,12 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"image2": {
+										"type": "string"
+									},
+									"image1": {
+										"type": "string"
+									},
 									"role": {
 										"type": "string"
 									},
@@ -174,7 +196,13 @@
 									"description": {
 										"type": "string"
 									},
-									"name": {
+									"nickName": {
+										"type": "string"
+									},
+									"lastName": {
+										"type": "string"
+									},
+									"firstName": {
 										"type": "string"
 									},
 									"id": {
@@ -182,11 +210,15 @@
 									}
 								},
 								"required": [
+									"image2",
+									"image1",
 									"role",
 									"age",
 									"nacionality",
 									"description",
-									"name",
+									"nickName",
+									"lastName",
+									"firstName",
 									"id"
 								],
 								"type": "object"

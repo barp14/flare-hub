@@ -7,13 +7,17 @@ import { JsonObject } from "swagger-ui-express";
 @Tags("Player")
 export default class PlayerController {
   @Post("/create")
-  public async create(@Body() body: { name: string; description: string; nacionality: string; age: string; role: string;  }): Promise<string> {
+  public async create(@Body() body: { firstName: string; lastName: string; nickName: string; description: string; nacionality: string; age: string; role: string; image1: string; image2: string; }): Promise<string> {
     const data = new PlayerModel({
-      name: body.name,
+      firstName: body.firstName,
+      lastName: body.lastName,
+      nickName: body.nickName,
       description: body.description,
       nacionality: body.nacionality,
       age: body.age,
       role: body.role,
+      image1: body.image1,
+      image2: body.image2,
     })
 
     try {
@@ -52,10 +56,10 @@ export default class PlayerController {
   }
 
   @Patch("/update")
-  public async update(@Body() body: { id: string; name: string; description: string; nacionality: string; age: string; role: string; }): Promise<JsonObject> {
+  public async update(@Body() body: { id: string; firstName: string; lastName: string; nickName: string;description: string; nacionality: string; age: string; role: string; image1: string; image2: string; }): Promise<JsonObject> {
     try {
       const result = await PlayerModel.findByIdAndUpdate(
-        body.id, { name: body.name, description: body.description, nacionality: body.nacionality, age: body.age, role: body.role }
+        body.id, { firstName: body.firstName, lastName: body.lastName, nickName: body.nickName, description: body.description, nacionality: body.nacionality, age: body.age, role: body.role, image1: body.image1, image2: body.image2 }
       )
       return { result: result };
     } catch (error: any) {

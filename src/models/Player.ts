@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
 
 const playerSchema = new mongoose.Schema({
-  name: {
+  firstName: {
+    required: true,
+    type: String,
+  },
+  lastName: {
+    required: true,
+    type: String,
+  },  
+  nickName: {
     required: true,
     type: String,
   },
@@ -19,6 +27,14 @@ const playerSchema = new mongoose.Schema({
   },
   role: {
     required: false,
+    type: String,
+  },
+  image1: {
+    required: true,
+    type: String,
+  },
+  image2: {
+    required: true,
     type: String,
   },
   equipment: {
