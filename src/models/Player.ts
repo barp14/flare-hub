@@ -37,6 +37,10 @@ const playerSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  slug: {
+    required: true,
+    type: String,
+  },
   equipment: {
     headsetId: {
       type: mongoose.Schema.Types.ObjectId, ref: "Headset"

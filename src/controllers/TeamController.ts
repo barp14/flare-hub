@@ -9,13 +9,14 @@ import { GameModel } from "../models/Game";
 export default class TeamController {
 
   @Post("/create")
-  public async create(@Body() body: { name: string; description: string; teamType: string; image1: string; image2: string; }): Promise<string> {
+  public async create(@Body() body: { name: string; description: string; teamType: string; image1: string; image2: string; slug: string}): Promise<string> {
     const data = new TeamModel({
       name: body.name,
       description: body.description,
       teamType: body.teamType,
       image1: body.image1,
-      image2: body.image2
+      image2: body.image2,
+      slug: body.slug,
     });
 
     try {

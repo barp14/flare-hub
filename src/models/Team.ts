@@ -27,6 +27,10 @@ const TeamSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  slug: {
+    required: true,
+    type: String,
+  },
   players: [playerSchema]  // Array de jogadores
 });
 

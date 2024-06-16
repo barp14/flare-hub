@@ -7,7 +7,7 @@ import { JsonObject } from "swagger-ui-express";
 @Tags("Player")
 export default class PlayerController {
   @Post("/create")
-  public async create(@Body() body: { firstName: string; lastName: string; nickName: string; description: string; nacionality: string; age: string; role: string; image1: string; image2: string; }): Promise<string> {
+  public async create(@Body() body: { firstName: string; lastName: string; nickName: string; description: string; nacionality: string; age: string; role: string; image1: string; image2: string; slug: string }): Promise<string> {
     const data = new PlayerModel({
       firstName: body.firstName,
       lastName: body.lastName,
@@ -18,6 +18,7 @@ export default class PlayerController {
       role: body.role,
       image1: body.image1,
       image2: body.image2,
+      slug: body.slug,
     })
 
     try {
