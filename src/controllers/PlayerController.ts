@@ -20,7 +20,6 @@ export default class PlayerController {
       image2: body.image2,
       slug: body.slug,
     })
-
     try {
       await data.save()
       return "OK"
@@ -53,6 +52,20 @@ export default class PlayerController {
     } catch (error) {
       console.error(error);
       return { error: 'Resource not found' }; 
+    }
+  }
+
+  @Get("/slug/{slug}")
+  public async getBySlug(slug: string): Promise<JsonObject> {
+    try {
+      const data = await PlayerModel.findOne({ slug: slug });
+      if (!data) {
+        throw new Error('Not Found');
+      }
+      return { data: data };
+    } catch (error) {
+      console.error(error);
+      return { error: 'Resource not found' };
     }
   }
 

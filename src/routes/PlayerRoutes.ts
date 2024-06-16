@@ -22,6 +22,12 @@ router.get("/get/:id", async (req: Request, res: Response) => {
   return res.status(response.error ? 400 : 200).send(response)
 })
 
+router.get("/slug/:slug", async (req: Request, res: Response) => {
+  const { slug } = req.params;
+  const result = await controller.getBySlug(slug);
+  res.send(result);
+});
+
 router.patch("/update", async (req: Request, res: Response) => {
   const response = await controller.update(req.body)
 
