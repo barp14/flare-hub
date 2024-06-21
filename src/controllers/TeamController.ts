@@ -90,9 +90,9 @@ export default class TeamController {
   @Get("/slug/{slug}")
   public async getBySlug(slug: string): Promise<JsonObject> {
     try {
-      const data = await TeamModel.findOne({ slug: slug });
+      const data = await TeamModel.findOne({ slug: slug }).populate('players').exec();
       if (!data) {
-        throw new Error('Not Found');
+        throw new Error('Team not found');
       }
       return { data: data };
     } catch (error) {
@@ -100,7 +100,6 @@ export default class TeamController {
       return { error: 'Resource not found' };
     }
   }
-
   @Patch("/update")
   public async update(@Body() body: { id: string; name: string; description: string; teamType: string }): Promise<JsonObject> {
     try {
@@ -128,7 +127,7 @@ export default class TeamController {
         return "Player not found";
       }
 
-      if (team.players.some(p => p.playerId?.equals(player._id))) {
+      if (team.players.some(p => p.equals(player._id))) {
         return "Player already in team";
       }
 
@@ -136,7 +135,7 @@ export default class TeamController {
         return "Team is already full";
       }
 
-      team.players.push({ playerId: player._id });
+      team.players.push(player._id);
       await team.save();
 
       return "Player added to team successfully";

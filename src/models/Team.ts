@@ -31,7 +31,7 @@ const TeamSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  players: [playerSchema]  // Array de jogadores
+  players: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }]  // Array de jogadores
 });
 
 export const TeamModel = mongoose.model("Team", TeamSchema);

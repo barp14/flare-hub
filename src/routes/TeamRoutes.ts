@@ -51,12 +51,9 @@ router.patch("/update", async (req: Request, res: Response) => {
 })
 
 router.put("/addPlayer", async (req: Request, res: Response) => {
-  try {
-    const response = await controller.addPlayer(req.body);
-    res.send(response);
-  } catch (error) {
-    res.status(500).send({ error: error instanceof Error ? error.message : "An unexpected error occurred" });
-  }
+  const { teamId, playerId } = req.body;
+  const result = await controller.addPlayer({ teamId, playerId });
+  res.send(result);
 });
 
 router.delete("/delete/:id", async (req: Request, res: Response) => {
