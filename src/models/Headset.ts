@@ -9,6 +9,10 @@ const headsetSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  slug: {
+    required: true,
+    type: String,
+  }
 });
 
 export const HeadsetModel = mongoose.model("Headset", headsetSchema);

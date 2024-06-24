@@ -9,6 +9,10 @@ const keyboardSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  slug: {
+    required: true,
+    type: String,
+  }
 })
 
 export const KeyboardModel = mongoose.model("Keyboard", keyboardSchema)

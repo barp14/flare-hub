@@ -43,7 +43,6 @@ router.get("/slug/:slug", async (req: Request, res: Response) => {
   res.send(result);
 });
 
-
 router.patch("/update", async (req: Request, res: Response) => {
   const response = await controller.update(req.body)
 

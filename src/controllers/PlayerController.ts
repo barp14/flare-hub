@@ -46,12 +46,12 @@ export default class PlayerController {
     try {
       const data = await PlayerModel.findById(id);
       if (!data) {
-        throw new Error('Not Found'); 
+        throw new Error('Not Found');
       }
       return { data: data };
     } catch (error) {
       console.error(error);
-      return { error: 'Resource not found' }; 
+      return { error: 'Resource not found' };
     }
   }
 
@@ -70,7 +70,7 @@ export default class PlayerController {
   }
 
   @Patch("/update")
-  public async update(@Body() body: { id: string; firstName: string; lastName: string; nickName: string;description: string; nacionality: string; age: string; role: string; image1: string; image2: string; }): Promise<JsonObject> {
+  public async update(@Body() body: { id: string; firstName: string; lastName: string; nickName: string; description: string; nacionality: string; age: string; role: string; image1: string; image2: string; }): Promise<JsonObject> {
     try {
       const result = await PlayerModel.findByIdAndUpdate(
         body.id, { firstName: body.firstName, lastName: body.lastName, nickName: body.nickName, description: body.description, nacionality: body.nacionality, age: body.age, role: body.role, image1: body.image1, image2: body.image2 }
@@ -95,7 +95,7 @@ export default class PlayerController {
     }
   }
 
-  @Put("/addEquipment/{playerId}")
+  @Put("/addEquipment/:playerId")
   public async addEquipment(playerId: string, @Body() body: { _id: string }): Promise<string> {
     try {
       const player = await PlayerModel.findById(playerId);
@@ -106,10 +106,10 @@ export default class PlayerController {
       // Verifica se a propriedade 'equipment' está definida
       if (!player.equipment) {
         player.equipment = {
-          headsetId: null,
-          keyboardId: null,
-          mouseId: null,
-          mousepadId: null
+          headset: null,
+          keyboard: null,
+          mouse: null,
+          mousepad: null
         };
       }
 
@@ -122,45 +122,38 @@ export default class PlayerController {
           { "mousepads._id": body._id }
         ]
       });
+
       if (!equipmentDoc) {
         return "Equipment not found";
       }
-      
-      // Procura dentro de cada array se algum "_id" corresponde ao "body._id", em caso positivo define o equipmentType de acordo com o "_id" correspondente
+
+      // Procura dentro de cada array se algum "_id" corresponde ao "body._id", em caso positivo define o equipamento correspondente
       let equipmentType = null;
+      let equipmentDetails = null;
+
       if (equipmentDoc.headsets.some(headset => headset._id?.toString() === body._id)) {
         equipmentType = "headset";
+        equipmentDetails = equipmentDoc.headsets.find(headset => headset._id?.toString() === body._id);
       } else if (equipmentDoc.keyboards.some(keyboard => keyboard?._id?.toString() === body._id)) {
         equipmentType = "keyboard";
+        equipmentDetails = equipmentDoc.keyboards.find(keyboard => keyboard._id?.toString() === body._id);
       } else if (equipmentDoc.mouses.some(mouse => mouse._id?.toString() === body._id)) {
         equipmentType = "mouse";
+        equipmentDetails = equipmentDoc.mouses.find(mouse => mouse._id?.toString() === body._id);
       } else if (equipmentDoc.mousepads.some(mousepad => mousepad._id?.toString() === body._id)) {
         equipmentType = "mousepad";
+        equipmentDetails = equipmentDoc.mousepads.find(mousepad => mousepad._id?.toString() === body._id);
       } else {
         return "Invalid equipment type";
       }
-      
-      // Associa o equipamento ao jogador
-      const mongoose = require('mongoose');
-      const { ObjectId } = mongoose.Types;
-      const equipmentId = new ObjectId(body._id);
 
-      switch (equipmentType) {
-        case "headset":
-          player.equipment.headsetId = equipmentId;
-          break;
-        case "keyboard":
-          player.equipment.keyboardId = equipmentId;
-          break;
-        case "mouse":
-          player.equipment.mouseId = equipmentId;
-          break;
-        case "mousepad":
-          player.equipment.mousepadId = equipmentId;
-          break;
-        default:
-          return "Invalid equipment type";
-      }
+      // Associa o equipamento ao jogador
+      player.equipment[equipmentType as keyof typeof player.equipment] = {
+        _id: equipmentDetails?._id,
+        name: equipmentDetails?.name,
+        brand: equipmentDetails?.brand,
+        slug: equipmentDetails?.slug
+      };
 
       // Salva as alterações no documento do jogador
       await player.save();

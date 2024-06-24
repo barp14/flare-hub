@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express"
 import EquipmentController from "../controllers/EquipmentController";
 
 const router = express.Router();
@@ -27,6 +27,13 @@ router.put("/addMousepad", async (req, res) => {
 router.get("/getAll", async (req, res) => {
   const response = await controller.all();
   res.json(response);
+});
+
+router.get('/getBySlug/:slug', async (req, res) => {
+  const slug = req.params.slug;
+  console.log(`Received request to get equipment by slug: ${slug}`);
+  const response = await controller.getBySlug(slug);
+  return res.status(response.error ? 400 : 200).send(response);
 });
 
 router.delete("/delete/:id", async (req, res) => {

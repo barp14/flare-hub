@@ -9,6 +9,10 @@ const mousepadSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  slug: {
+    required: true,
+    type: String,
+  }
 })
 
 export const MousepadModel = mongoose.model("Mousepad", mousepadSchema)
