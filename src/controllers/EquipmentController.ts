@@ -8,7 +8,7 @@ import { Param } from "routing-controllers";
 export default class EquipmentController {
 
   @Put("/addHeadset")
-  public async addHeadset(@Body() body: { name: string, brand: string, slug: string }): Promise<string> {
+  public async addHeadset(@Body() body: { name: string, brand: string, slug: string, image: string }): Promise<string> {
     try {
       let equipment = await EquipmentModel.findOne();
       if (!equipment) {
@@ -31,7 +31,7 @@ export default class EquipmentController {
   }
   
   @Put("/addKeyboard")
-  public async addKeyboard(@Body() body: { name: string, brand: string, slug: string }): Promise<string> {
+  public async addKeyboard(@Body() body: { name: string, brand: string, slug: string, image: string }): Promise<string> {
     try {
       let equipment = await EquipmentModel.findOne();
       if (!equipment) {
@@ -54,7 +54,7 @@ export default class EquipmentController {
   }
 
   @Put("/addMouse")
-  public async addMouse(@Body() body: { name: string, brand: string, slug: string }): Promise<string> {
+  public async addMouse(@Body() body: { name: string, brand: string, slug: string, image: string }): Promise<string> {
     try {
       let equipment = await EquipmentModel.findOne();
       if (!equipment) {
@@ -77,7 +77,7 @@ export default class EquipmentController {
   }
   
   @Put("/addMousepad")
-  public async addMousepad(@Body() body: { name: string, brand: string, slug: string }): Promise<string> {
+  public async addMousepad(@Body() body: { name: string, brand: string, slug: string, image: string }): Promise<string> {
     try {
       let equipment = await EquipmentModel.findOne();
       if (!equipment) {

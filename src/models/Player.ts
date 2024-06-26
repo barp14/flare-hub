@@ -5,6 +5,7 @@ const equipmentSchema = new mongoose.Schema({
   name: String,
   brand: String,
   slug: String,
+  image: String,
 }, { _id: false });
 
 const playerSchema = new mongoose.Schema({

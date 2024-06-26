@@ -152,7 +152,8 @@ export default class PlayerController {
         _id: equipmentDetails?._id,
         name: equipmentDetails?.name,
         brand: equipmentDetails?.brand,
-        slug: equipmentDetails?.slug
+        slug: equipmentDetails?.slug,
+        image: equipmentDetails?.image
       };
 
       // Salva as alterações no documento do jogador

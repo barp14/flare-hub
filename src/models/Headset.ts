@@ -12,6 +12,10 @@ const headsetSchema = new mongoose.Schema({
   slug: {
     required: true,
     type: String,
+  },
+  image: {
+    required: true,
+    type: String,
   }
 });
 
