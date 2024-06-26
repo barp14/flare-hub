@@ -53,6 +53,10 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"displayPriority": {
+										"type": "number",
+										"format": "double"
+									},
 									"slug": {
 										"type": "string"
 									},
@@ -85,6 +89,7 @@
 									}
 								},
 								"required": [
+									"displayPriority",
 									"slug",
 									"image2",
 									"image1",
@@ -213,6 +218,13 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"displayPriority": {
+										"type": "number",
+										"format": "double"
+									},
+									"slug": {
+										"type": "string"
+									},
 									"image2": {
 										"type": "string"
 									},
@@ -245,6 +257,8 @@
 									}
 								},
 								"required": [
+									"displayPriority",
+									"slug",
 									"image2",
 									"image1",
 									"role",

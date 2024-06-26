@@ -57,6 +57,11 @@ const playerSchema = new mongoose.Schema({
     required: true, 
     type: String 
   },
+  displayPriority:
+  {
+    required: true,
+    type: Number
+  },
   equipment: {
     headset: equipmentSchema,
     keyboard: equipmentSchema,
