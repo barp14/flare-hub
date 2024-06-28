@@ -2,6 +2,7 @@ import { Body, Get, Delete, Put, Route, Tags } from "tsoa";
 import { EquipmentModel } from "../models/Equipment";
 import { JsonObject } from "swagger-ui-express";
 import { Param } from "routing-controllers";
+import mongoose from "mongoose";
 
 @Route("api/Equipment")
 @Tags("Equipment")
@@ -156,15 +157,45 @@ export default class EquipmentController {
     }
   }
 
-    @Delete("/delete/:id")
-    public async delete(id: string): Promise<JsonObject> {
-      try {
-        const data = await EquipmentModel.findByIdAndDelete(id)
-        return { data: data };
-      } catch (error: any) {
+  @Delete('/delete/:id')
+  public async delete(@Param('id') id: string): Promise<JsonObject> {
+    try {
+      const objectId = new mongoose.Types.ObjectId(id);
+
+      // Remove o equipamento do array correspondente
+      const equipmentDoc = await EquipmentModel.findOneAndUpdate(
+        {
+          $or: [
+            { 'headsets._id': objectId },
+            { 'keyboards._id': objectId },
+            { 'mouses._id': objectId },
+            { 'mousepads._id': objectId }
+          ]
+        },
+        {
+          $pull: {
+            headsets: { _id: objectId },
+            keyboards: { _id: objectId },
+            mouses: { _id: objectId },
+            mousepads: { _id: objectId }
+          }
+        },
+        { new: true }
+      );
+
+      if (!equipmentDoc) {
         return {
-          error: error.message
+          error: true,
+          message: 'Equipment not found'
         };
       }
+
+      return { data: 'Equipment deleted successfully' };
+    } catch (error: any) {
+      return {
+        error: true,
+        message: error.message
+      };
     }
+  }
 }
